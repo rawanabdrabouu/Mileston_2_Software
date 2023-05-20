@@ -9,16 +9,16 @@ const getUser = async function(req) {
   }
 
   const user = await db.select('*')
-    .from('se_project.sessions')
+    .from('sessions')
     .where('token', sessionToken)
-    .innerJoin('se_project.users', 'se_project.sessions.userId', 'se_project.users.id')
-    .innerJoin('se_project.roles', 'se_project.users.roleId', 'se_project.roles.id')
+    .innerJoin('users', 'sessions.userId', 'users.id')
+    .innerJoin('roles', 'users.roleid', 'roles.id')
     .first();
   
   console.log('user =>', user)
-  user.isStudent = user.roleId === roles.student;
-  user.isAdmin = user.roleId === roles.admin;
-  user.isSenior = user.roleId === roles.senior;
+  user.isStudent = user.roleid === roles.student;
+  user.isAdmin = user.roleid === roles.admin;
+  user.isSenior = user.roleid === roles.senior;
 
   return user;  
 }
@@ -32,14 +32,14 @@ module.exports = function(app) {
 
   // Register HTTP endpoint to render /users page
   app.get('/users', async function(req, res) {
-    const users = await db.select('*').from('se_project.users');
+    const users = await db.select('*').from('users');
     return res.render('users', { users });
   });
 
   // Register HTTP endpoint to render /courses page
   app.get('/stations', async function(req, res) {
     const user = await getUser(req);
-    const stations = await db.select('*').from('se_project.stations');
+    const stations = await db.select('*').from('stations');
     return res.render('stations_example', { ...user, stations });
   });
 

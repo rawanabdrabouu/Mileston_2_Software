@@ -33,10 +33,10 @@
           {{#users}}
             <tr>
               <td>{{id}}</td>
-              <td>{{firstName}}</td>
-              <td>{{lastName}}</td>
+              <td>{{firstname}}</td>
+              <td>{{lastname}}</td>
               <td>{{major}}</td>
-              <td>{{roleId}}</td>
+              <td>{{roleid}}</td>
             </tr>
           {{/users}}
         </thead>

@@ -11,24 +11,24 @@ const getUser = async function (req) {
   console.log("hi",sessionToken);
   const user = await db
     .select("*")
-    .from("se_project.sessions")
+    .from("sessions")
     .where("token", sessionToken)
     .innerJoin(
-      "se_project.users",
-      "se_project.sessions.userId",
-      "se_project.users.id"
+      "users",
+      "sessions.userId",
+      "users.id"
     )
     .innerJoin(
-      "se_project.roles",
-      "se_project.users.roleId",
-      "se_project.roles.id"
+      "roles",
+      "users.roleid",
+      "roles.id"
     )
    .first();
 
   console.log("user =>", user);
-  user.isNormal = user.roleId === roles.user;
-  user.isAdmin = user.roleId === roles.admin;
-  user.isSenior = user.roleId === roles.senior;
+  user.isNormal = user.roleid === roles.user;
+  user.isAdmin = user.roleid === roles.admin;
+  user.isSenior = user.roleid === roles.senior;
   return user;
 };
 
@@ -39,7 +39,7 @@ module.exports = function (app) {
        const user = await getUser(req);
      // const {userId}=req.body
      console.log("hiiiiiiiiiii");
-      const users = await db.select('*').from("se_project.users")
+      const users = await db.select('*').from("users")
         
       return res.status(200).json(users);
     } catch (e) {
