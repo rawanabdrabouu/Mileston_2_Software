@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS sessions
     id SERIAL NOT NULL,
     userId integer NOT NULL,
     token text NOT NULL,
-    expiresAt timestamp NOT NULL,
+    expiresat timestamp NOT NULL,
     CONSTRAINT sessions_pkey PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS roles
